@@ -9,15 +9,15 @@ const Formulario = ({step, setStep, dataEditar}) => {
 
     const [nome, setNome] = useState(flagEditar ? dataEditar.name : '');
     const [cargo, setCargo] = useState(flagEditar ? dataEditar.cargo : '');
-    const [areaInteresse, setAreaInteresse] = useState(flagEditar ? dataEditar.areaInteresse : '');
+    const [areaInteresse, setAreaInteresse] = useState(flagEditar ? dataEditar.area_interesse : '');
 
 
     const criarNovoUsuario = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/criarUsers', {
+            const response = await axios.post('http://localhost:3001/registrar', {
             name: nome,
             cargo: cargo,
-            areaInteresse: areaInteresse
+            area_interesse: areaInteresse
             });
 
             if(response?.data?.result > 0) {
@@ -31,10 +31,10 @@ const Formulario = ({step, setStep, dataEditar}) => {
 
     const atualizarUsuario = async () => {
         try {
-            const response = await axios.put(`http://localhost:3001/atualizarUsers/${dataEditar._id}`, {
+            const response = await axios.put(`http://localhost:3001/editar/${dataEditar.codigo_registro}`, {
             name: nome,
             cargo: cargo,
-            areaInteresse: areaInteresse
+            area_interesse: areaInteresse
             });
             
             if(response?.data?.result > 0) {

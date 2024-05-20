@@ -9,12 +9,9 @@ function TableList({step, setStep, setDataEditar}) {
 
   
   useEffect(() => {
-    // Substitua a URL abaixo pelo URL do seu servidor Node.js
-    axios.get('http://localhost:3001/users')
+    axios.get('http://localhost:3001/registros')
       .then((response) => {
         setDataUsers(response.data);
-
-        // console.log('data=', response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -27,13 +24,13 @@ function TableList({step, setStep, setDataEditar}) {
 
   const excluirUsuario = async (userId) => {
     try {
-      const response = await axios.delete(`http://localhost:3001/excluirUsers/${userId}`);
+      const response = await axios.delete(`http://localhost:3001/excluir/${userId}`);
       
       if(response?.data?.result > 0) {
         alert("Excluído com sucesso!");
 
         // Atualize o state dataUsers após a exclusão
-        setDataUsers((prevDataUsers) => prevDataUsers.filter(user => user._id !== userId));
+        setDataUsers((prevDataUsers) => prevDataUsers.filter(user => user.codigo_registro !== userId));
 
       }
     } catch (error) {
@@ -62,8 +59,8 @@ function TableList({step, setStep, setDataEditar}) {
                   <tr key={index}>
                     <td>{data.name}</td>
                     <td>{data.cargo}</td>
-                    <td>{data.areaInteresse}</td>
-                    <td><Button variant="primary" onClick={() => {setDataEditar(data);setStep(2);}}>Editar</Button> <Button variant="danger" onClick={() => {excluirUsuario(data._id);}}>Excluir</Button></td>
+                    <td>{data.area_interesse}</td>
+                    <td><Button variant="primary" onClick={() => {setDataEditar(data);setStep(2);}}>Editar</Button> <Button variant="danger" onClick={() => {excluirUsuario(data.codigo_registro);}}>Excluir</Button></td>
                   </tr>
               ))}
             </tbody>
