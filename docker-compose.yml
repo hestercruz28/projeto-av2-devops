@@ -1,0 +1,44 @@
+services:
+  front:
+    build:
+      context: ./front_devops
+      dockerfile: Dockerfile
+    container_name: front
+    ports:
+      - "80:80"
+    networks:
+      - ProjetoDevops
+
+  back:
+    build:
+      context: ./back_devops
+      dockerfile: Dockerfile
+    container_name: back
+    ports:
+      - "3000:3000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER: apella22_admin
+      - MYSQL_PASSWORD: 32366308
+      - MYSQL_DATABASE: apella22_ontime
+    depends_on:
+      - db
+    networks:
+      - ProjetoDevops
+
+  db:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: apella22_ontime
+      MYSQL_USER: apella22_admin
+      MYSQL_PASSWORD: 32366308
+    networks:
+      - ProjetoDevops
+
+networks:
+  ProjetoDevops:
+    driver: bridge
